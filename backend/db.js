@@ -27,13 +27,13 @@ const userSchema= mongoose.Schema({
         type: String,
         required: true,
         trim: true,
-        maxlength: 30
+        maxlength: 150
     },
     lastName: {
         type: String,
         required: true,
         trim: true,
-        maxlength: 30
+        maxlength: 150
     },
     avatar: {
         type: String,
@@ -74,6 +74,12 @@ const accountSchema=mongoose.Schema({
 
 const transactionSchema=mongoose.Schema({
     senderAccountID: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Account',
+        required: true,
+        index: true
+    },
+    receiverAccountId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Account',
         required: true,
