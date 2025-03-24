@@ -6,7 +6,7 @@ const authMiddleware=function(req,res,next) {
 
     if(!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(403).json({
-            message: "Invalid Token"
+            message: "InvalID Token"
         })
     }
 
@@ -19,7 +19,7 @@ const authMiddleware=function(req,res,next) {
     }
     catch(err){
         return res.status(403).json({
-            message: "Token Expired or Invalid"
+            message: "Token Expired or InvalID"
         })
     }
 }

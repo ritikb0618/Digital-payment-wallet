@@ -2,7 +2,7 @@ const mongoose=require('mongoose')
 const bcrypt=require('bcrypt')
 
 try {
-    await mongoose.connect(process.env.DATABASE_URI)
+    mongoose.connect(process.env.DATABASE_URI)
 }
 catch(err) {
     console.log(err)
@@ -55,7 +55,7 @@ userSchema.methods.checkPassword=async function(userPassword) {
 
 const accountSchema=mongoose.Schema({
     userID: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectID,
         ref: 'Users',
         unique: true,
         required: true
@@ -66,7 +66,7 @@ const accountSchema=mongoose.Schema({
     },
     transactions: [
         {
-            type: mongoose.Schema.Types.ObjectId,
+            type: mongoose.Schema.Types.ObjectID,
             ref: 'Transactions'
         }
     ]
@@ -74,13 +74,13 @@ const accountSchema=mongoose.Schema({
 
 const transactionSchema=mongoose.Schema({
     senderAccountID: {
-        type: mongoose.Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectID,
         ref: 'Account',
         required: true,
         index: true
     },
-    receiverAccountId: {
-        type: mongoose.Schema.Types.ObjectId,
+    receiverAccountID: {
+        type: mongoose.Schema.Types.ObjectID,
         ref: 'Account',
         required: true,
         index: true

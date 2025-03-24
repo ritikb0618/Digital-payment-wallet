@@ -7,7 +7,7 @@ const rootRouter=require('./index.js')
 const {User, Account, transaction}=require('../db.js')
 const jwt=require('jsonwebtoken')
 const JWT_SECRET=process.env.JWT_SECRET
-const {authMiddleware} = require('../middleware.js')
+const { authMiddleware } =require('../middleware.js')
 
 const userRouter=express.Router()
 
@@ -29,7 +29,7 @@ userRouter.post('/signup',async (req,res)=>{
     const {success} = signupBodySchema.safeParse(req.body)
     if(!success) {
         return res.status(411).json({
-            message: "Invalid Input",
+            message: "InvalID Input",
             h:req.body
         })
     }
@@ -85,7 +85,7 @@ userRouter.post('/signin',async (req,res)=>{
     const {success} =await signinBodySchema.safeParse(req.body)
     if(!success) {
         return status(411).json({
-            message: "Invalid Inputs",
+            message: "InvalID Inputs",
         })
     }
     
@@ -126,12 +126,12 @@ userRouter.put('/change',authMiddleware,async (req,res)=>{
 
     if (!success) {
         return res.status(411).json({
-            message: "Invalid inputs"
+            message: "InvalID inputs"
         })
     }
-    if(!mongoose.Types.ObjectId.isValid(req.userID)) {
+    if(!mongoose.Types.ObjectID.isValID(req.userID)) {
         return res.status(400).json({
-            message: "Invalid UserID"
+            message: "InvalID UserID"
         })
     }
     const user = await User.findOne({
@@ -156,7 +156,7 @@ userRouter.put('/change',authMiddleware,async (req,res)=>{
         }
     }
     else {
-        await User.updateOne({ _id: req.userId }, req.body)
+        await User.updateOne({ _id: req.userID }, req.body)
         res.json({
             message: "Updated successfully"
         })
@@ -164,13 +164,13 @@ userRouter.put('/change',authMiddleware,async (req,res)=>{
 })
 
 userRouter.get('/dashboard',authMiddleware,async (req,res)=>{
-    if(!mongoose.Types.ObjectId.isValid(req.userID)) {
+    if(!mongoose.Types.ObjectID.isValID(req.userID)) {
         return res.status(400).json({
-            message: "Invalid UserID"
+            message: "InvalID UserID"
         })
     }
 
-    const user= await User.findById(eq.userID) 
+    const user= await User.findByID(eq.userID) 
     if(!user) {
         return res.status(404).json({
             message: "User Not Found"
@@ -196,7 +196,7 @@ userRouter.get('/dashboard',authMiddleware,async (req,res)=>{
             match: {userID: {$ne: req.userID}}
         },
         {
-            path: 'receiverAccountId',
+            path: 'receiverAccountID',
             select: 'userID',
             match: {userID: {$ne: req.userID}}
         },
@@ -208,7 +208,7 @@ userRouter.get('/dashboard',authMiddleware,async (req,res)=>{
             }
         },
         {
-            path: 'receiverAccountId',
+            path: 'receiverAccountID',
             populate: {
                 path: 'userID',
                 select: ['firstName','lastName','_id','avatar']
@@ -223,11 +223,11 @@ userRouter.get('/dashboard',authMiddleware,async (req,res)=>{
         if(transaction.senderAccountID == null) {
             type: 'debit',
             accountInfo={
-                "accountID": transaction.receiverAccountId._id,
-                "userInfo": transaction.receiverAccountId.userID
+                "accountID": transaction.receiverAccountID._id,
+                "userInfo": transaction.receiverAccountID.userID
             }
         }
-        else if(transaction.receiverAccountId==null) {
+        else if(transaction.receiverAccountID==null) {
             type: 'credit',
             accountInfo={
                 "accountID": transaction.senderAccountID._id,
@@ -236,7 +236,7 @@ userRouter.get('/dashboard',authMiddleware,async (req,res)=>{
         }
 
         return {
-            transactionId: transaction._id,
+            transactionID: transaction._id,
             type: type,
             accountInfo: accountInfo,
             time: transaction.timeStamp,
@@ -266,7 +266,7 @@ userRouter.get('/search',authMiddleware,async (req,res) =>{
 
     res.json({
         users: users.map((user) => {
-            return (user._id != req.userId ? {
+            return (user._id != req.userID ? {
                 "firstName": user.firstName,
                 "lastName": user.lastName,
                 "_id": user._id,
