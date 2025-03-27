@@ -1,7 +1,7 @@
 import React, { use, useEffect, useState } from "react";
 import BottomWarning from "../components/BottomWarning";
 import Button from "../components/Button";
-import Header from "../components/Header";
+import Heading from "../components/Heading";
 import InputBox from "../components/InputBox";
 import SubHeading from "../components/SubHeading";
 import EyeComponent from "../components/EyeComponent";
@@ -84,7 +84,7 @@ const SignIn=()=>{
 
 			<div className='flex  absolute top-0 z-2 justify-center items-center h-[100dvh] w-[100dvw] md:justify-start '>
 				<div className=' w-[350px] text-center  flex flex-col items-center md:m-[150px]'>
-					<Header label={'Sign In'} />
+					<Heading label={'Sign In'} />
 					<SubHeading label={'Enter your credentials'} />
 
 					<InputBox
