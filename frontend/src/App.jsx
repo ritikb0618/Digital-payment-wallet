@@ -4,3 +4,5 @@ import { AuthProvider,useAuth } from './context/authContext';
 import SignUp from './pages/Signup'
 import SignIn from './pages/Signin'
 import DashBoard from './pages/DashBoard'
+import SendMoney from './pages/SendMoney'
+import Settings from './pages/Settings'

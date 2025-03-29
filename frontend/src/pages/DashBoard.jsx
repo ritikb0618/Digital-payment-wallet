@@ -3,7 +3,7 @@ import {SideBar} from '../components/SideBar'
 import Balance from '../components/Balance'
 import Users from '../components/Users'
 import History from '../components/History'
-import Header from './components/Header'
+import Header from '../components/Header'
 import TransactionBox from '../components/TransactionBox';
 import loading from './assets/img/Loadingimg.gif'
 
