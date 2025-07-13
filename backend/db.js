@@ -1,61 +1,60 @@
-const mongoose=require('mongoose')
-const bcrypt=require('bcrypt')
+const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 try {
     mongoose.connect(process.env.DATABASE_URI)
-}
-catch(err) {
+} catch (err) {
     console.log(err)
 }
 
-const userSchema= mongoose.Schema({
+const userSchema = mongoose.Schema({
     username: {
         type: String,
         required: true,
         unique: true,
         trim: true,
         lowercase: true,
-        minlength: 5,
-        maxlength: 20
+        minlength: 3,
+        maxlength: 30
     },
     password: {
         type: String,
         required: true,
-        inlength: 8
+        minlength: 8
     },
     firstName: {
         type: String,
         required: true,
         trim: true,
-        maxlength: 150
+        maxlength: 30
     },
     lastName: {
         type: String,
         required: true,
         trim: true,
-        maxlength: 150
+        maxlength: 30
     },
-    avatar: {
-        type: String,
-        default: '#90EE90'
+    avatar : {
+        type : String,
+        default: "#90EE90"
     }
-})
+    });
 
-// now lets add some sequrity to our passcodes
-userSchema.methods.createHash=async(plainTextPassword) =>{
-    const saltRounds=10
-    const salt=await bcrypt.genSalt(saltRounds)
+userSchema.methods.createHash = async (plainTextPassword) => {
+    const saltRounds = 10;
 
-    return await bcrypt.hash(plainTextPassword, salt)
+    const salt = await bcrypt.genSalt(saltRounds);
+    return await bcrypt.hash(plainTextPassword, salt);
+
+}
+userSchema.methods.checkPassword = async function (userPassword) {
+    return await bcrypt.compare(userPassword, this.password);
 }
 
-userSchema.methods.checkPassword=async function(userPassword) {
-    return await bcrypt.compare(userPassword,this.password);
-}
 
-const accountSchema=mongoose.Schema({
-    userID: {
-        type: mongoose.Schema.Types.ObjectID,
+const accountSchema = mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Users',
         unique: true,
         required: true
@@ -64,23 +63,20 @@ const accountSchema=mongoose.Schema({
         type: Number,
         required: true
     },
-    transactions: [
-        {
-            type: mongoose.Schema.Types.ObjectID,
-            ref: 'Transactions'
-        }
-    ]
+    transactions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Transactions' }]
+
 })
 
-const transactionSchema=mongoose.Schema({
-    senderAccountID: {
-        type: mongoose.Schema.Types.ObjectID,
+const transactionsSchema = mongoose.Schema({
+    senderAccountId: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Account',
         required: true,
         index: true
+
     },
-    receiverAccountID: {
-        type: mongoose.Schema.Types.ObjectID,
+    receiverAccountId: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Account',
         required: true,
         index: true
@@ -89,7 +85,7 @@ const transactionSchema=mongoose.Schema({
         type: Number,
         require: true
     },
-    timeStamp: {
+    timestamp: {
         type: Date,
         default: Date.now,
         required: true
@@ -99,14 +95,14 @@ const transactionSchema=mongoose.Schema({
     }
 })
 
-const Account=mongoose.model('Account',accountSchema)
+const Account = mongoose.model('Account', accountSchema);
 
-const User=mongoose.model('User',userSchema)
+const User = mongoose.model("Users", userSchema);
 
-const transaction=mongoose.model('transaction',transactionSchema)
+const Transaction = mongoose.model("Transactions", transactionsSchema);
 
-module.exports={
+module.exports = {
     User,
     Account,
-    transaction
+    Transaction
 }

@@ -5,12 +5,13 @@ import Users from '../components/Users'
 import History from '../components/History'
 import Header from '../components/Header'
 import TransactionBox from '../components/TransactionBox';
-import loading from './assets/img/Loadingimg.gif'
+import loading from '../assets/img/Loadingimg.gif'
 
-import axios from './axios'
+import axios from '../axios'
 import { useSetRecoilState } from 'recoil';
-import { transactionAtom } from './store/atom/TransactionInfo';
+import { transactionAtom } from '../store/atom/TransactionInfo';
 import { useEffect, useState } from 'react';
+
 const DashBoard=()=>{
     const [info,setInfo]=useSetRecoilState(transactionAtom)
     const [errMsg,setErrMsg]=useState('')
@@ -89,4 +90,4 @@ const DashBoard=()=>{
 		</>
 	);
 }
-export default Dashboard;
+export default DashBoard;

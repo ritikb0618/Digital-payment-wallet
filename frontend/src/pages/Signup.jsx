@@ -14,7 +14,7 @@ import { AuthProvider,useAuth } from "../context/authContext";
 import { useNavigate } from "react-router-dom";
 
 const SignUp=()=>{
-    const login={useAuth}
+    const login=useAuth()
     const [isLoading,setIsLoading]=useState(false);
     const [signupData,setSignupData]=useState({
         firstName: '',
@@ -49,8 +49,8 @@ const SignUp=()=>{
         }
         try {
             setIsLoading(true)
-            const response=await axios.post('/user/signup',signupData)
-            login(response.data.token)
+            const response=await axios.post('/api/v1/user/signup',signupData)
+            login(response.data.token);
             navigate('/dashboard')
         }
         catch(error){
@@ -144,7 +144,7 @@ const SignUp=()=>{
 							</svg>
 						}
 						onChange={(e) => {
-							handleOnChange(e, 'username');
+							handleOnChange(e, 'userName');
 						}}
 					/>
 

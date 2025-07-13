@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { SideBar } from "../components/SideBar";
-import Balance from "../components/Balance";
-import Users from "../components/Users";
-import History from "../components/History";
-import Header from "../components/Header";
+// import Balance from "../components/Balance";
+// import Users from "../components/Users";
+// import History from "../components/History";
+// import Header from "../components/Header";
 import axios from "../axios";
 import { useSetRecoilState } from "recoil";
 import { SideBarOpen } from "../store/atom/SideBarAtom";

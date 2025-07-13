@@ -18,7 +18,7 @@ const PrivateRoute=({children}) =>{
 
                 if(token) {
                     const response=await axios({
-                        method: post,
+                        method: "post",
                         url: '/me',
                         headers: {
                             'Content-Type': 'application/json',
@@ -26,7 +26,7 @@ const PrivateRoute=({children}) =>{
                         }
                     })
                     if(
-                        response?.status==200 ||
+                        response?.status===200 ||
                         response?.data?.Authenticated ||
                         response?.data?.message=="User is Authenticated"
                     ) {
@@ -66,4 +66,4 @@ const PrivateRoute=({children}) =>{
     return <>{authenticated ? <>{children}</> : <Navigate to='/signin' />}</>;
 }
 
-export default ProtectedRoute;
+export default PrivateRoute;

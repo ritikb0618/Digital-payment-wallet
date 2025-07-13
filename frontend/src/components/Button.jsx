@@ -14,3 +14,4 @@ const Button=({label,onClick,loading}) =>{
 		</button>
 	);
 }
+export default Button;
