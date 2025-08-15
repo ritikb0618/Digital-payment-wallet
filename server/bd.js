@@ -39,7 +39,6 @@ const userSchema = mongoose.Schema({
         default: "#90EE90"
     }
     });
-
 userSchema.methods.createHash = async function (plainTextPassword) {
     const saltRounds = 10;
 

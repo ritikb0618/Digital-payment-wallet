@@ -19,7 +19,7 @@ const signupBodySchema = zod.object({
 
 }).refine((data) => {
     if (data.password.includes(' ')) {
-        return fals
+        return false
     }
     return true
 })
