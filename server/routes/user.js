@@ -88,7 +88,7 @@ userRouter.post('/signin', async (req, res) => {
     let user = await User.findOne({ username: req.body.username });
     if (!user) {
         return res.status(411).json({
-            message: "Email not found"
+            message: "User not found"
         })
     }
 
