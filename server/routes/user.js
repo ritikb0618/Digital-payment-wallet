@@ -156,9 +156,9 @@ userRouter.put('/change', authMiddleware, async (req, res) => {
         }
     }
     else {
-        await User.updateOne({ _id: req.userId }, req.body)
-        res.json({
-            message: "Updated successfully"
+        // await User.updateOne({ _id: req.userId }, req.body)
+        res.status(411).json({
+            message: "Enter both current and new password"
         })
     }
 
