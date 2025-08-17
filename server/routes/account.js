@@ -47,8 +47,11 @@ accountRouter.post('/transfer', authMiddleware, async (req, res) => {
         if (to === req.userId) {
             throw new Error("Can not send money to self");
         }
-        if (!mongoose.Types.ObjectId.isValid(to) || !mongoose.Types.ObjectId.isValid(req.userId) ){
-            throw new Error("Invalid User Id")
+        if (!mongoose.Types.ObjectId.isValid(to)){
+            throw new Error("Invalid Receiver Id")
+        }
+        if( !mongoose.Types.ObjectId.isValid(req.userId) ) {
+            throw new Error("Invalid Sender Id")
         }
         const senderAccount = await Account.findOne({
             userId: req.userId
@@ -56,8 +59,11 @@ accountRouter.post('/transfer', authMiddleware, async (req, res) => {
         const receiverAccount = await Account.findOne({
             userId: to
         }).session(session);
-        if (!senderAccount || !receiverAccount) {
-            throw new Error("Account not found")
+        if (!senderAccount) {
+            throw new Error("Sender Account not found")
+        }
+        if (!receiverAccount) {
+            throw new Error("Receiver Account not found")
         }
         if (amount > senderAccount.balance || parseFloat(amount) <= 0) {
             throw new Error("Insufficient balance")
