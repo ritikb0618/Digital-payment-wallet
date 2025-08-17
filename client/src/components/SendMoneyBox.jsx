@@ -11,38 +11,46 @@ const SendMoneyBox = ({ id, name }) => {
 	const transferMoney = async () => {
 		SetIsTransferring(true);
 		try {
-			setErrMsg('');
-			setMsg('');
-			if (amount <= 0) {
-				setErrMsg('Enter Amount more than 0');
-
-				SetIsTransferring(false);
-				return;
-			}
-			const token = `Bearer ${localStorage.getItem('token')}`;
-			const response = await axios({
-				method: 'post',
-				url: '/account/transfer',
-				headers: {
-					authorization: token,
-				},
-				data: {
-					to: id,
-					amount: amount,
-				},
-			});
+		  setErrMsg('');
+		  setMsg('');
+	  
+		  if (amount <= 0) {
+			setErrMsg('Enter Amount more than 0');
+			SetIsTransferring(false);
+			return;
+		  }
+	  
+		  const token = `Bearer ${localStorage.getItem('token')}`;
+		  const response = await axios({
+			method: 'post',
+			url: '/account/transfer',
+			headers: {
+			  authorization: token,
+			},
+			data: {
+			  to: id,
+			  amount: amount,
+			},
+		  });
+	  
+		  if (response?.status === 200) {
 			setMsg(response?.data?.message);
+	  
+			// ✅ Navigate to Dashboard after success
+			navigate('/dashboard');
+		  }
 		} catch (error) {
-			if (!error?.response) {
-				setErrMsg('No Server Response');
-			} else if (error?.response) {
-				setErrMsg(error?.response?.data?.message);
-			}
+		  if (!error?.response) {
+			setErrMsg('No Server Response');
+		  } else if (error?.response) {
+			setErrMsg(error?.response?.data?.message);
+		  }
 		}
 		SetIsTransferring(false);
-	};
+	  };
+	  
 	return (
-		<div className='flex text-white justify-end w-full h-full sm:h-auto sm:w-auto sm:min-w-[350px] flex-col sm:justify-center border-4	gap-5 border-black ease-in duration-500  hover:shadow-[15px_15px_rgba(0,255,0,1)]     bg-black'>
+		<div className='flex text-white justify-end w-full h-full sm:h-auto sm:w-auto sm:min-w-[350px] flex-col sm:justify-center border-4	gap-5 border-yellow-500 ease-in duration-500  hover:shadow-[15px_15px_rgba(0,255,0,1)]     bg-black'>
 			<div className=' flex flex-col justify-between	 p-5 pt-10 flex-grow'>
 				<div className='text-3xl text-center font-bold '>
 					<h1>Send Money</h1>

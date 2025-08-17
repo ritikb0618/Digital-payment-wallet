@@ -18,7 +18,7 @@ const SendMoney = () => {
 			{!id || !name ? (
 				<Navigate to='/404'></Navigate>
 			) : (
-				<div className='flex justify-center items-center h-[100vh] bg-white	'>
+				<div className='flex justify-center items-center h-[100vh] bg-black	'>
 					<SendMoneyBox
 						name={name}
 						id={id}
