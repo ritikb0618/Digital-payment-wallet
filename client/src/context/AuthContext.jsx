@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
 				if (token) {
 					const response = await axios({
 						method: 'post',
-						url: '/me
+						url: '/me',
 						headers: {
 							'Content-Type': 'application/json',
 							Authorization: `Bearer ${token}`,
